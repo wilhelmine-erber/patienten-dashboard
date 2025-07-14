@@ -4,6 +4,7 @@ import ProjectsSidebar from './components/ProjectsSidebar'
 import NewProject from './components/NewProject'
 import NoPatientSelected from './components/NoPatientSelected'
 import type { ProjectsState } from './types'
+import SelectedProject from './components/SelectedProject'
 
 function App() {
 
@@ -11,6 +12,15 @@ function App() {
     selectedProjectId: undefined,
     projects: []
   });
+
+  function handleSelectPatient(id) {
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      };
+    });
+  }
 
   // Handler to start adding a new project
   function handleStartAddProject() {
@@ -55,7 +65,12 @@ function App() {
   // Determine the content to display based on the selected project state
   // If no project is selected, show the NewProject component
   // If a project is selected, show the NoPatientSelected component
-  let content;
+
+  const selectedProject = projectsState.projects.find(project => project.id === projectsState.selectedProjectId);
+
+  let content = <SelectedProject project={selectedProject} />;
+
+
   if (projectsState.selectedProjectId === null) {
     content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />;
   } else if (projectsState.selectedProjectId === undefined) {
@@ -68,6 +83,7 @@ function App() {
         <ProjectsSidebar
           onStartAddProject={handleStartAddProject}
           projects={projectsState.projects}
+          onSelectProject={handleSelectPatient}
         />
         {content}
       </main>
