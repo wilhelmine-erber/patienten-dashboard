@@ -1,7 +1,8 @@
 import noUserData from '../assets/noData.jpg';
 import Button from './Button';
+import type { NoPatientSelectedProps } from '../types';
 
-export default function NoPatientSelected({onStartAddProject}: { onStartAddProject: () => void }) {
+export default function NoPatientSelected({ onStartAddProject }: NoPatientSelectedProps) {
     return <div className="mt-24 text-center w-2/3">
 
         <img src={noUserData} alt='empty user data' className='w-50 object-contain mx-auto' />

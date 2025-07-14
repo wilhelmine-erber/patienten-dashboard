@@ -1,9 +1,6 @@
 import Input from "./Input";
-import { use, useRef } from "react";
-
-type NewProjectProps = {
-    onAdd: (data: { name: string; age: string; health: string }) => void;
-};
+import { useRef } from "react";
+import type { NewProjectProps } from "../types";
 
 export default function NewProject({ onAdd }: NewProjectProps) {
 
@@ -16,6 +13,7 @@ export default function NewProject({ onAdd }: NewProjectProps) {
         const enteredAge = age.current?.value ?? "";
         const enteredHealth = health.current?.value ?? "";
 
+        if(enteredName.trim() === '' || enteredAge.trim() === '' || enteredHealth.trim() === '')
 
         onAdd({
             name: enteredName,

@@ -3,13 +3,11 @@ import './App.css'
 import ProjectsSidebar from './components/ProjectsSidebar'
 import NewProject from './components/NewProject'
 import NoPatientSelected from './components/NoPatientSelected'
+import type { ProjectsState } from './types'
 
 function App() {
 
-  const [projectsState, setProjectsState] = useState<{
-    selectedProjectId: string | null | undefined,
-    projects: any[]
-  }>({
+  const [projectsState, setProjectsState] = useState<ProjectsState>({
     selectedProjectId: undefined,
     projects: []
   });
@@ -24,16 +22,17 @@ function App() {
     });
   }
 
-  function handleAddProject(projectData: any) {
-    setProjectsState(prevState => {
-
+  function handleAddProject(projectData: { name: string; age: string; health: string }) {
+    setProjectsState((prevState) => {
+      const projectId = Math.random();
       const newProject = {
         ...projectData,
-        id: Math.random()
+        id: projectId
       }
 
       return {
         ...prevState,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject]
       }
     })
@@ -51,7 +50,10 @@ function App() {
   return (
     <>
       <main className='h-screen my-8 flex gap-8'>
-        <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+        <ProjectsSidebar
+          onStartAddProject={handleStartAddProject}
+          projects={projectsState.projects}
+        />
         {content}
       </main>
     </>
