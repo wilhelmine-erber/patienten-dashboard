@@ -34,3 +34,12 @@ export type ButtonProps = {
     onClick?: () => void;
     [key: string]: any;
 };
+
+export type ModalProps = {
+    children: React.ReactNode;
+};
+
+export type ModalRef = {
+    open: () => void;
+    close: () => void;
+};

@@ -12,8 +12,8 @@ function App() {
     projects: []
   });
 
+  // Handler to start adding a new project
   function handleStartAddProject() {
-
     setProjectsState(prevState => {
       return {
         ...prevState,
@@ -22,6 +22,18 @@ function App() {
     });
   }
 
+  // Handler to cancel a new project
+  function handleCancelAddProject() {
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+      };
+    });
+  }
+
+
+  // Handler to add a new project
   function handleAddProject(projectData: { name: string; age: string; health: string }) {
     setProjectsState((prevState) => {
       const projectId = Math.random();
@@ -40,9 +52,12 @@ function App() {
 
   console.log(projectsState);
 
+  // Determine the content to display based on the selected project state
+  // If no project is selected, show the NewProject component
+  // If a project is selected, show the NoPatientSelected component
   let content;
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={handleAddProject} />;
+    content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />;
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoPatientSelected onStartAddProject={handleStartAddProject} />;
   }
