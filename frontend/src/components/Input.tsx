@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 
 type InputProps = {
     label: string;
@@ -5,12 +6,17 @@ type InputProps = {
     [key: string]: any;
 };
 
-export default function Input({ label, textarea, ...props }: InputProps) {
+const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+    ({ label, textarea, ...props }, ref) => (
+        <div className="mb-4">
+            <label className="block mb-2 font-bold">{label}</label>
+            {textarea ? (
+                <textarea ref={ref as React.Ref<HTMLTextAreaElement>} {...props} className="border p-2 w-full" />
+            ) : (
+                <input ref={ref as React.Ref<HTMLInputElement>} {...props} className="border p-2 w-full" />
+            )}
+        </div>
+    )
+);
 
-    const classes = "w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600";
-
-    return <p className="flex flex-col gap-1 my-4">
-        <label className="text-sm font-bold uppercase text-stone-500">{label}</label>
-        {textarea ? <textarea className={classes} {...props} /> : <input className={classes} {...props} />}
-    </p>
-}
+export default Input;
